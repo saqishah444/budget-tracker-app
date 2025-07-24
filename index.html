@@ -27,7 +27,7 @@
             <div class="col-md-4">
                 <div class="bg-danger text-white summary-card">
                     <div class="summary-title">Spent</div>
-                    <div class="summary-value" id="spentValue">$0.00</div>
+                    <div class="summary-value">$ <span id="spentValue"> 0.00</span></div>
                     <button id="expense_btn" class="btn btn-outline-light btn-sm mt-2" data-bs-toggle="modal"
                         data-bs-target="#addExpenseModal">Add Expense</button>
                 </div>
@@ -54,11 +54,11 @@
             <div class="col-md-3">
                 <label for="filterCategory" class="form-label">Filter by Category</label>
                 <select class="form-select" id="filterCategory">
-                    <option selected>All</option>
-                    <option value="food">Food</option>
-                    <option value="transport">Transport</option>
-                    <option value="entertainment">Entertainment</option>
-                    <option value="bills">Bills</option>
+                    <option value ="all" selected>All</option>
+                    <option value ="food">Food</option>
+                    <option value ="transport">Transport</option>
+                    <option value ="groceries">Groceries</option>
+                    <option value ="bills">Bills</option>
                 </select>
             </div>
             <div class="col-md-3 d-flex align-items-end">
@@ -167,7 +167,7 @@
         let incomeValue = document.getElementById("incomeValue");
         let inputIncome = document.getElementById("inputIncome");
         let updateincomebtn = document.getElementById("updateincomebtn");
-        let remainingValue = document.getElementById("remainingValue");
+       let remainingValue = document.getElementById("remainingValue")
 
         // add variables //
         let totalIncome = 0;
@@ -175,17 +175,18 @@
         let totalRemaining = 0;
         let expenses = [];
 
-        function Updatetotalvalues(income = null, totalExpense = null,) {
+        function Updatetotalvalues(income = null, totalExpense = null) {
             if (income !== null) {
                 incomeValue.innerText = income;
                 totalIncome = income;
-            }
+            };
             if (totalExpense !== null){
                 totalRemaining = +totalIncome - totalExpense;
                 
 
-            }
+            };
             remainingValue.innerText = totalRemaining;
+           
 
         };
 
@@ -246,11 +247,29 @@
             });
              document.getElementById("expensesdata").innerHTML = rowshtml;
              Updatetotalvalues(null, totalExpamount);
-             
-             
-           
-
+             document.getElementById("spentValue").innerText = totalExpamount;
         };
+        let filterCategory = document.getElementById("filterCategory");
+        let filterBtn = document.getElementById("filterBtn");
+        filterBtn.addEventListener("click", function(){
+            let filterdata = expenses.filter(function(elem, index){
+                
+                if (filterCategory.value == "Food"){
+                    return elem.category.food;
+                }
+                if (filterCategory.value == "Transport"){
+                    return elem.category.transport;
+                }
+                if (filterCategory.value == "Groceries"){
+                    return elem.category.groceries;
+                }
+                if (filterCategory.value == "Bills"){
+                    return elem.category.bills;
+                };
+            })
+        })
+      
+
         
 
 
